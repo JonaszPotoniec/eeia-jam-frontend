@@ -11,7 +11,8 @@ const { Provider } = StoreContext;
 
 export const StoreProvider = ({ children }) => {
     const [globalState, dispatch] = useReducer(rootReducer, initialState);
-    const store = useMemo(() => [globalState, dispatch], [globalState]);
+    // const store = globalState;
+    const store = useMemo(() => globalState, [globalState]);
 
     return (
         <StoreContext.Provider value={[store, dispatch]}>

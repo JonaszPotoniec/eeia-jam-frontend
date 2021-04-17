@@ -5,7 +5,7 @@ import styles from '../styles/Header.module.scss'
 
 const Header = (props) => {
     return (
-        <div className={styles.navbar}>
+        <div className={styles.header}>
             <h1>{props.title}</h1>
         </div>
     )

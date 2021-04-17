@@ -7,14 +7,18 @@
     background: $background-gradient;
     color: white;
     padding: 25px;
+
+    h1 {
+        margin: 0;
+    }
 }
 
 .container {
     background: white;
-    padding: 15px;
     color: $font-black;
-    margin-top: 20px;
     border-radius: $default-border-radius;
+    max-height: calc(100% - 110px);
+    overflow-y: scroll;
 
     h1 {
         font-family: $secondary-font;
@@ -26,6 +30,8 @@
     }
 
     form {
+        padding: 15px;
+
         h2 {
             margin: 0;
         }
@@ -50,6 +56,10 @@
 
             textarea {
                 resize: none;
+            }
+
+            .radio {
+
             }
         }
 

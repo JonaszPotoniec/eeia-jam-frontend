@@ -1,0 +1,52 @@
+@import 'variables.scss';
+
+.Error404 {
+    display: grid;
+    background-color: #21D4FD;
+    background: $background-gradient;
+    align-items: center;
+    justify-items: center;
+    color: white;
+    padding: 3em;
+    height: 100%;
+}
+
+.content {
+    align-self: start;
+}
+
+.fancy3d {
+    font-size: 30vmin;
+    margin: .5vmin;
+    animation: font-shadow-500 4s alternate infinite ease-in-out;
+    width: 100%;
+    text-align: center;
+  }
+  
+  @keyframes font-shadow-500 {
+    0% {
+      $color: 37;
+      $rec: 0em;
+      $shadows: 'hsl(' + $color + ', 100%, 46%) ' +  $rec +  ' ' + $rec;
+    
+      @while $rec < .15 {
+        $shadows: $shadows + ',hsl(' + $color + ', 100%, 46%) ' +  $rec +  ' ' + 0;
+        $rec: $rec + .1;
+      };
+      text-shadow: unquote($shadows);
+      transform: rotateY(25deg);
+    }
+    100% {
+      $color: 37;
+      $rec: 0em;
+      $shadows: 'hsl(' + $color + ', 100%, 46%) ' +  $rec +  ' ' + $rec;
+    
+      @while $rec < .15  {
+        $shadows: $shadows + ',hsl(' + $color + ', 100%, 46%) ' +  ($rec * -1) +  ' ' + 0;
+        $rec: $rec + .1;
+      };
+      text-shadow: unquote($shadows);
+      transform: rotateY(-25deg);
+    }
+  }
+  

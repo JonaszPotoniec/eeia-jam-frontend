@@ -5,6 +5,7 @@ import styles from '../styles/Login.module.scss'
 
 import { useStore } from '../store';
 import { loginUser } from '../actions';
+import ErrorMsg from './ErrorMsg';
 
 const Login = () => {
     const [loginValue, setLoginValue] = useState('');
@@ -16,7 +17,7 @@ const Login = () => {
 
     const login = e => {
         e.preventDefault();
-        dispatch(loginUser(null));
+        dispatch(loginUser({ name: 'test user' }));
         if (!validate()) return;
         
         //zapytanie do api o logowanie
@@ -74,9 +75,7 @@ const Login = () => {
                             />
                         </label>
 
-                        { errorMsg &&
-                        <div className={styles.errorMsg}>{errorMsg}</div>
-                        }
+                        {errorMsg && <ErrorMsg msg={errorMsg} />}
 
                         <button onClick={e => login(e)}>Login</button>
                     </form>

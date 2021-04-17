@@ -1,10 +1,10 @@
 @import 'variables.scss';
 
-.navbar {
-    display: grid;
+.header {
     height: 4em;
-
-    > h1 {
+    display: grid;
+    
+    h1 {
         font-family: $secondary-font;
         font-weight: 900;
         font-size: 2em;

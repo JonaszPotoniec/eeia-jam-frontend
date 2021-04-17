@@ -9,9 +9,12 @@ import CreateAccount from './CreateAccount';
 import Events from './Events';
 import Map from './Map';
 import CreateEvent from './CreateEvent';
+import Navbar from './Navbar';
+import Error404 from './Error404';
 
 const App = () => {
     const [store] = useStore();
+    const subpages = ["Events", "Map", "CreateEvent", "Navbar", "Error404"];
 
     useEffect(() => {
         const debug = e => {
@@ -34,16 +37,22 @@ const App = () => {
                 </Route>
                 <Route exact path="/events">
                     <Events />
+                    <Navbar />
                 </Route>
                 <Route exact path="/map">
                     <Map />
+                    <Navbar />
                 </Route>
                 <Route exact path="/create-event">
                     <CreateEvent />
+                    <Navbar />
                 </Route>
                 <Route exact path="/home" render={() => <div>home</div>} />
                 <Route> 
-                    404 - zly path mordko
+                    <Error404 
+                        subpages = {subpages}
+                    />
+                    <Navbar />
                 </Route>
             </Switch>
         </BrowserRouter>

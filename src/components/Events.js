@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import styles from '../styles/Events.module.scss';
 import Header from './Header';
+import Navbar from './Navbar';
 import dayjs from "dayjs";
 
 const Event = (props) => {
@@ -44,6 +45,8 @@ const Event = (props) => {
 
     const getPlural = (n) => {
         let [scale, x] = getTimeScale(n);
+
+        if(x < 0) return t("Events.Event.Time.Started");
 
         if(x == 1)
             return t(`Events.Event.Time.${scale}.Singular`, {count: x});
@@ -88,7 +91,10 @@ const Event = (props) => {
 
 const Events = () => {
     const { t } = useTranslation();
-    const [ eventList, setEventList ] = useState([{name: "Nocny Kochanek", time: '2021-04-17 18:30:00', location: {lat: 50, lon: 21}}]);
+    const [ eventList, setEventList ] = useState([
+        { name: "Nocny Kochanek", time: '2021-04-17 18:30:00', location: {lat: 50, lon: 21} },
+        { name: "Nocny Kochanek", time: '2021-04-17 18:30:00', location: {lat: 50, lon: 21} },
+    ]);
 
 
     return (
@@ -96,7 +102,7 @@ const Events = () => {
             <Header title={t("Events.Title")}/>
             <div className={styles.eventsList}>
                 {
-                    eventList.map((e) => (
+                    eventList.map((e, i) => (
                         <Event
                             name={e.name}
                             type={e.type}
@@ -104,8 +110,8 @@ const Events = () => {
                             time={dayjs(e.time)}
                             location={e.location}
                             score={e.score}
-                            key={e.name + e.time + e.location}
-
+                            key={i} //poki co, poki nie ma danych z bazy
+                            // key={e.name + e.time + e.location}
                         />
                     ))
                 }

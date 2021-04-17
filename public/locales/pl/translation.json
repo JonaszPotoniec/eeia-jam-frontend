@@ -18,17 +18,23 @@
         "EmptyEmail": "Wpisz poprawny email",
         "EmptyPasswordConfirm": "Wpisz potwierdzenie hasła",
         "WrongEmail": "Wpisz poprawny email",
-        "PasswordDoesntMatch": "Wpisana wartość jest inna od hasła"
+        "PasswordDoesntMatch": "Wpisana wartość jest inna od hasła",
+        "EmptyName": "Wpisz poprawną nazwę",
+        "EmptyDescription": "Opis musi mieć conajmniej 20 znaków",
+        "EmptyType": "Wybierz typ wydarzenia",
+        "EmptyDate": "Wybierz datę wydarzenia",
+        "PastDate": "Wybierz datę z przyszłości"
     },
     "AuthErrors": {
         "IncorrectCredentials": "Wpisane dane są błędne",
         "CouldntCreateUser": "Wystąpił błąd, no niestety"
     },
     "Events": {
-        "Title": "wydarzenia",
+        "Title": "Wydarzenia",
 
         "Event": {
             "Time": {
+                "Started": "Rozpocząte",
                 "Minutes": {
                     "Singular": "Za {{count}} minutę",
                     "Plural1": "Za {{count}} minuty",
@@ -48,6 +54,14 @@
         }
     },
     "Map": {
-        "Title": "mapa"
+        "Title": "Mapa"
+    },
+    "CreateEvent": {
+        "Title": "Stwórz event",
+        "EventName": "Nazwa eventu",
+        "EventDescription": "Opis eventu",
+        "Type": "Typ", 
+        "Date": "Data",
+        "AddEvent": "Stwórz event"
     }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from '../styles/CreateAccount.module.scss'
+import ErrorMsg from './ErrorMsg';
 
 const CreateAccount = () => {
     const [emailValue, setEmailValue] = useState('');
@@ -95,7 +96,7 @@ const CreateAccount = () => {
                             />
                         </label>
 
-                        {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+                        {errorMsg && <ErrorMsg msg={errorMsg} />}
 
                         <button onClick={e => create(e)}>{t("CreateAccount.Create")}</button>
                     </form>

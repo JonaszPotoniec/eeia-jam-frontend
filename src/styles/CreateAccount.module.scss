@@ -79,29 +79,3 @@
         }
     }
 }
-
-.errorMsg {
-    position: fixed;
-    padding: .5em;
-    text-align: center;
-    width: 16em;
-    left: calc(50% - 8em);
-    top: 0;
-    background: #D33B37;
-    border-radius: 0 0 1em 1em;
-    color: white;
-    z-index: 0;
-    animation: slidein .5s;
-}
-
-
-@keyframes slidein {
-    from {
-        transform: translateY(-100%);
-    }
-  
-    to {
-        transform: translateY(0%);
-    }
-}
-
