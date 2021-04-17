@@ -6,6 +6,7 @@
         "CreateAccount": "Stwórz nowe konto"
     },
     "CreateAccount": {
+        "Title": "Stwórz konto",
         "Login": "Masz już konto? Zaloguj się",
         "Create": "Stwórz konto",
         "Password": "Hasło",
@@ -15,7 +16,38 @@
         "EmptyLogin": "Wpisz poprawny login",
         "EmptyPassword": "Wpisz poprawne hasło",
         "EmptyEmail": "Wpisz poprawny email",
+        "EmptyPasswordConfirm": "Wpisz potwierdzenie hasła",
         "WrongEmail": "Wpisz poprawny email",
         "PasswordDoesntMatch": "Wpisana wartość jest inna od hasła"
+    },
+    "AuthErrors": {
+        "IncorrectCredentials": "Wpisane dane są błędne",
+        "CouldntCreateUser": "Wystąpił błąd, no niestety"
+    },
+    "Events": {
+        "Title": "wydarzenia",
+
+        "Event": {
+            "Time": {
+                "Minutes": {
+                    "Singular": "Za {{count}} minutę",
+                    "Plural1": "Za {{count}} minuty",
+                    "Plural2": "Za {{count}} minut"
+                },
+                "Hours": {
+                    "Singular": "Za {{count}} godzinę",
+                    "Plural1": "Za {{count}} godziny",
+                    "Plural2": "Za {{count}} godzin"
+                },
+                "Days": {
+                    "Singular": "Za {{count}} dzień",
+                    "Plural1": "Za {{count}} dni",
+                    "Plural2": "Za {{count}} dni"
+                }
+            }
+        }
+    },
+    "Map": {
+        "Title": "mapa"
     }
 }

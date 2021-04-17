@@ -1,0 +1,52 @@
+@import 'variables.scss';
+
+.events {
+    height: 100%;
+    width: 100%;
+    background-color: #21D4FD;
+    background: $background-gradient;
+    color: white;
+}
+
+.eventsList {
+    height: 100%;
+}
+
+.event {
+    width: 90%;
+    margin: 0 5%;
+    display: grid;
+    padding: .2em;
+    grid-template-columns: 3.5em 1fr;
+    border-radius: .8em;
+    background: white;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.5);
+
+    > img {
+        height: 90%;
+        width: 90%;
+        border-radius: 1.2em;
+        object-fit: cover;
+        align-self: center;
+        justify-self: center;
+
+    }
+
+    > div {
+        display: grid;
+        align-content: start;
+
+        > h2 {
+            margin: 0;
+        }
+
+        > div {
+            color: #353535;
+            > i {
+                margin-right: .5em;
+            }
+        }
+    }
+}

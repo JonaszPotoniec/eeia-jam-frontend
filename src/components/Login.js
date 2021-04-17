@@ -3,21 +3,26 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import styles from '../styles/Login.module.scss'
 
+import { useStore } from '../store';
+import { loginUser } from '../actions';
+
 const Login = () => {
     const [loginValue, setLoginValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const { t, i18n } = useTranslation();
     const history = useHistory();
+    const [, dispatch] = useStore();
 
     const login = e => {
         e.preventDefault();
-        
+        dispatch(loginUser(null));
         if (!validate()) return;
         
         //zapytanie do api o logowanie
 
-        //jesli złe passy no to nic sie nie dzieje
+        //jesli złe passy
+        //setErrorMsg(t('AuthErrors.IncorrectCredentials'));
 
         //jesli dobre
         //history.push(/home);
@@ -28,11 +33,14 @@ const Login = () => {
             setErrorMsg(t('FormErrors.EmptyLogin'));
             return false;
         }
-
-        if (passwordValue.length < 1) {
+        
+        if (passwordValue.length < 1) { 
             setErrorMsg(t('FormErrors.EmptyPassword'));
             return false;
         }
+
+        setErrorMsg('');
+        return true;
     };
 
     return (
@@ -73,7 +81,7 @@ const Login = () => {
                         <button onClick={e => login(e)}>Login</button>
                     </form>
                 </div>
-                <div className={styles.CreateAccount}>{t("Login.CreateAccount")}</div>
+                <div className={styles.createAccount}>{t("Login.CreateAccount")}</div>
             </div>
         </div>
     )

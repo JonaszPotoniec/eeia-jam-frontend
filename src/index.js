@@ -4,10 +4,16 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import './styles/main.scss';
 import './i18n';
+import '@fortawesome/fontawesome-free/css/all.css';
+
+import { StoreProvider } from './store';
+import { authReducer } from './reducers/authReducer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StoreProvider reducer={authReducer}>
+      <App />
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

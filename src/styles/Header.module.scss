@@ -1,0 +1,14 @@
+@import 'variables.scss';
+
+.navbar {
+    display: grid;
+    height: 4em;
+
+    > h1 {
+        font-family: $secondary-font;
+        font-weight: 900;
+        font-size: 2em;
+        text-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.5);
+        margin: .3em;
+    }
+}

@@ -1,0 +1,68 @@
+@import 'variables.scss';
+
+.createEvent {
+    height: 100%;
+    width: 100%;
+    background-color: #21D4FD;
+    background: $background-gradient;
+    color: white;
+    padding: 25px;
+}
+
+.container {
+    background: white;
+    padding: 15px;
+    color: $font-black;
+    margin-top: 20px;
+    border-radius: $default-border-radius;
+
+    h1 {
+        font-family: $secondary-font;
+        font-weight: 900;
+        font-size: 2em;
+        text-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.5);
+        padding: 0;
+        margin: 0;
+    }
+
+    form {
+        h2 {
+            margin: 0;
+        }
+
+        label {
+            display: grid;
+            margin: 1em 0;
+            color: #848484;
+
+            input, textarea {
+                border: none;
+                border-radius: .5em;
+                background: #f2f2f2;
+                padding: .8em;
+                margin: .4em 0;
+
+                &:focus {
+                    outline: none;
+                    background: #e6e6e6;
+                }
+            }
+
+            textarea {
+                resize: none;
+            }
+        }
+
+        button {
+            background-color: #21D4FD;
+            background: $background-gradient;
+            color: white;
+            border-radius: $default-border-radius;
+            border: none;
+            padding: .7em 2em;
+            transition: all .5s;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+}
