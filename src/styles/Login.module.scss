@@ -1,4 +1,116 @@
-.login {
-    background: red;
+@import 'variables.scss';
 
+.login {
+    height: 100%;
+    width: 100%;
+    background-color: #21D4FD;
+    background: $background-gradient;
+    color: white;
+}
+
+.appName {
+    font-family: $secondary-font;
+    font-size: 3em;
+    text-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.5);
+}
+
+.loginPageContainer {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    padding: 6em 0;
+    grid-gap: 1em;
+    align-items: center;
+    justify-items: center;
+}
+
+.loginWindowContainer {
+    background: white;
+    color: black;
+    display: grid;
+    border-radius: .5em;
+    width: 20em;
+    height: 20em;
+    padding: 1em;
+    box-shadow: $shadow-lg;
+    position: relative;
+
+    > form {
+        display: flex;
+        flex-direction: column;
+
+        > h2 {
+            margin: 0;
+            margin-bottom: .5em;
+        }
+        > label {
+            display: grid;
+            margin: 1em 0;
+            color: #848484;
+
+            > input {
+                border: none;
+                border-radius: .5em;
+                background: #f2f2f2;
+                padding: .8em;
+                margin: .4em 0;
+            }
+        }
+        > button {
+            background-color: #21D4FD;
+            background: $background-gradient;
+            color: white;
+            border-radius: .5em;
+            border: none;
+            padding: .3em 2em;
+            box-shadow: 0 .08em .08em rgba($color: #000000, $alpha: 0.8);
+            transition: all .5s;
+            margin: 0 2em;
+
+            &:active {
+                box-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.8);
+            }
+        }
+    }
+}
+
+.errorMsg {
+    position: fixed;
+    padding: .5em;
+    text-align: center;
+    width: 16em;
+    left: calc(50% - 8em);
+    top: 0;
+    background: #D33B37;
+    border-radius: 0 0 1em 1em;
+    color: white;
+    z-index: 0;
+    animation: slidein .5s;
+}
+
+
+@keyframes slidein {
+    from {
+        transform: translateY(-100%);
+    }
+  
+    to {
+        transform: translateY(0%);
+    }
+  }
+
+.CreateAccount {
+    background-color: white;
+    color: black;
+    border-radius: .5em;
+    border: none;
+    padding: .6em 2em;
+    box-shadow: 0 .08em .08em rgba($color: #000000, $alpha: 0.8);
+    transition: all .5s;
+    margin: 0 2em;
+
+    &:active {
+        box-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.8);
+    }
 }
