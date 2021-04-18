@@ -17,16 +17,23 @@ const Login = () => {
 
     const login = e => {
         e.preventDefault();
-        dispatch(loginUser({ name: 'test user' }));
         if (!validate()) return;
         
         //zapytanie do api o logowanie
-
-        //jesli złe passy
-        //setErrorMsg(t('AuthErrors.IncorrectCredentials'));
-
-        //jesli dobre
-        //history.push(/home);
+        fetch(`http://localhost:5000/login`, {
+            method: 'POST', 
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({
+                email: loginValue,
+                password: passwordValue
+            })
+        })
+        .then(res => res.json())
+        .then(({ user }) => {
+            dispatch(loginUser(user));
+            history.push('/events');
+        })
+        .catch(err => console.log('Login error:', err));
     }
 
     const validate = () => {

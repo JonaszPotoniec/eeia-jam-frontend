@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/CreateEvent.module.scss'
 import Header from './Header';
 import ErrorMsg from './ErrorMsg';
 import PageWrapper from './PageWrapper';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import LocationPicker from "react-leaflet-location-picker";
 
 const CreateEvent = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
     const [date, setDate] = useState('');
+    const [pointLocation, setPointLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState('');
     const { t } = useTranslation();
+
+    useEffect(()=>{
+        navigator.geolocation.getCurrentPosition((position)=>{
+            const lat  = position.coords.latitude;
+            const lon = position.coords.longitude;
+            setPointLocation([lat, lon]);
+        })
+    }, [])
 
     const validate = () => {
         if (name.length < 1) {
@@ -47,7 +57,23 @@ const CreateEvent = () => {
 
     const addEvent = e => {
         e.preventDefault();
-        validate();
+        if(!validate()) return;
+
+        fetch(`http://localhost:5000/events`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                title: name,
+                description: description,
+                start_date: date,
+                latitude: pointLocation[0],
+                longitude: pointLocation[1],
+                is_official: type === 'official'
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.log('Registration error:', err));
     }
 
     return (
@@ -108,6 +134,27 @@ const CreateEvent = () => {
                             onChange={e => setDate(new Date(e.target.value))}
                         />
                     </label>
+                    {
+                    pointLocation &&
+                    <LocationPicker 
+                        pointMode={{
+                            banner: false,
+                            control: {
+                            values: [pointLocation],
+                            onClick: point =>
+                                setPointLocation(point),
+                            onRemove: point =>
+                                console.log("I've just been clicked for removal :(", point)
+                            },
+                            startPort: "auto",
+                            overlayAll: false
+                        }} 
+                        startPort="auto"
+                        overlayAll={false}
+                        showControls={false}
+                        showInputs={false}
+                    />
+                    }
 
                     {errorMsg && <ErrorMsg msg={errorMsg} />}
 

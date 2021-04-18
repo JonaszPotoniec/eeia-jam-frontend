@@ -2,11 +2,13 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useTranslation } from 'react-i18next';
 import styles from '../styles/Events.module.scss';
 import Header from './Header';
+import DetailsCard from './DetailsCard';
 import dayjs from "dayjs";
 import PageWrapper from './PageWrapper';
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
+import { AnimatePresence } from 'framer-motion';
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,22 +41,22 @@ const Event = (props) => {
         },(err)=>console.warn(err));
       }
 
-      const getDistanceFromLatLonInKm2 = (lat1, lon1, lat2, lon2) => {
-            const deg2rad = (deg) => {
-                return deg * (Math.PI/180)
-            }
-            var R = 6371; // Radius of the earth in km
-            var dLat = deg2rad(lat2-lat1);  // deg2rad below
-            var dLon = deg2rad(lon2-lon1); 
-            var a = 
-            Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-            Math.sin(dLon/2) * Math.sin(dLon/2)
-            ; 
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-            var d = R * c; // Distance in km
-            setDistance(Math.round(d*10)/10 + "km stąd");
+    const getDistanceFromLatLonInKm2 = (lat1, lon1, lat2, lon2) => {
+        const deg2rad = (deg) => {
+            return deg * (Math.PI/180)
         }
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1); 
+        var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        setDistance(Math.round(d*10)/10 + "km stąd");
+    }
 
     const getTimeScale = (n) => {
         if(Math.floor(n/1000/60/60/24) > 0)
@@ -81,7 +83,7 @@ const Event = (props) => {
     useEffect(()=>{
         setRemainingTime(props.time.diff(dayjs()))
         if(props.lastLocation != null)
-            getDistanceFromLatLonInKm2(props.location.lat, props.location.lon, props.lastLocation.lon, props.lastLocation.lat)
+            getDistanceFromLatLonInKm2(props.location.lat, props.location.lon, props.lastLocation.lat, props.lastLocation.lon)
         else
             getDistanceFromLatLonInKm(props.location.lat, props.location.lon)
         setTimeInterval(
@@ -97,7 +99,10 @@ const Event = (props) => {
     }, [props.time, props.location.lat, props.location.lon])
 
     return (
-        <div className={styles.event}>
+        <div 
+            className={styles.event}
+            onClick={props.onClick}
+        >
             <img alt={props.name+"-image"} src="https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"/>
             <div>
                 <h2>{props.name}</h2>
@@ -119,6 +124,9 @@ const Events = () => {
     const [ eventList, setEventList ] = useState([]);
     const maxDistance = 10000000;
     const [lastLocation, setLastLocation] = useState(null);
+    
+    //do DetailsCard
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition((position)=>{
@@ -135,7 +143,7 @@ const Events = () => {
     }, []);
 
 
-    return (
+    return (<>
         <div className={styles.events}>
             <Header title={t("Events.Title")}/>
             <div className={styles.eventsList}>
@@ -150,6 +158,7 @@ const Events = () => {
                             score={e.score}
                             key={e.event_id}
                             lastLocation={lastLocation}
+                            onClick={(e) => setSelectedEvent(e)}
                             // key={e.name + e.time + e.location}
                         />
                     ))
@@ -157,7 +166,14 @@ const Events = () => {
             </div>
             <span className={styles.addEvent}></span>
         </div>
-    )
+
+        {/* TODO */}
+        <AnimatePresence>
+            {selectedEvent && (
+                <DetailsCard event={selectedEvent} close={() => setSelectedEvent(null)}/>
+            )}
+        </AnimatePresence>
+    </>)
 }
 
 const eventWrapper = () => (

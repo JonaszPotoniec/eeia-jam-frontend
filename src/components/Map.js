@@ -158,7 +158,7 @@ const PopupInside = (props) => {
     useEffect(()=>{
         setRemainingTime(props.time.diff(dayjs()))
         if(props.lastLocation != null)
-            getDistanceFromLatLonInKm2(props.location.lat, props.location.lon, props.lastLocation.lon, props.lastLocation.lat)
+            getDistanceFromLatLonInKm2(props.location.lat, props.location.lon, props.lastLocation.lat, props.lastLocation.lon)
         else
             getDistanceFromLatLonInKm(props.location.lat, props.location.lon)
         setTimeInterval(

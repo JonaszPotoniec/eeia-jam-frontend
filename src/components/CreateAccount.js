@@ -31,17 +31,12 @@ const CreateAccount = () => {
         //zapytanie api o utworzenie nowego użytkownika
         fetch(`http://localhost:5000/register`, {
             method: 'POST',
+            headers: {'Content-Type':'application/json'},
             body: JSON.stringify(user)
         })
         .then(res => res.json())
         .then(data => console.log(data))
         .catch(err => console.log('Registration error:', err));
-
-        //jesli coś źle pójdzie
-        //setErrorMsg(t('AuthErrors.CouldntCreateUser'));
-
-        //jesli dobre
-        //
     }
 
     const validate = () => {
