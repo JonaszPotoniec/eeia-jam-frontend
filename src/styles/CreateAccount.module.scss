@@ -23,6 +23,7 @@
     font-size: 3em;
     text-shadow: 0 .06em .06em rgba($color: #000000, $alpha: 0.5);
     align-self: flex-end; 
+    margin: 0;
 }
 
 .createAccountWindowContainer {
@@ -35,6 +36,8 @@
     padding: 1em;
     box-shadow: $shadow-lg;
     position: relative;
+    // max-height: calc(100% - 110px);
+    // overflow-y: scroll;
 
     > form {
         display: flex;
@@ -46,12 +49,12 @@
         }
         > label {
             display: grid;
-            margin: 1em 0;
+            margin: .3em 0;
             color: #848484;
 
             > input {
                 border: none;
-                border-radius: .5em;
+                border-radius: .4em;
                 background: #f2f2f2;
                 padding: .8em;
                 margin: .4em 0;

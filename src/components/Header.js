@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
 import styles from '../styles/Header.module.scss'
 
 const Header = (props) => {

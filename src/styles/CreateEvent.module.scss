@@ -3,10 +3,8 @@
 .createEvent {
     height: 100%;
     width: 100%;
-    background-color: #21D4FD;
-    background: $background-gradient;
     color: white;
-    padding: 25px;
+    padding: $default-page-padding;
 
     h1 {
         margin: 0;
@@ -73,6 +71,10 @@
             transition: all .5s;
             margin: 0 auto;
             display: block;
+
+            &:focus {
+                outline: none;
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ const Error404 = (props) => {
 
     const didYouMean = () => {
         let closest = getClosestString();
-
+        return <a href={window.location.href.split("/").slice(0,3).join("/")+"/"+closest}>{closest}</a>
     } 
 
     const getLastParameter = () => {
@@ -24,7 +24,7 @@ const Error404 = (props) => {
             <div className={styles.fancy3d}>😢</div>
             <div className={styles.content}>
                 <h2>Strona "{getLastParameter()}" nie istnieje</h2>
-                <h3>Czy chodziło Ci o {getClosestString()}?</h3>
+                <h3>Czy chodziło Ci o {didYouMean()}?</h3>
             </div>
         </div>
     )

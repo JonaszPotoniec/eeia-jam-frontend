@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styles from '../styles/CreateEvent.module.scss'
-import Navbar from './Navbar';
 import Header from './Header';
 import ErrorMsg from './ErrorMsg';
+import PageWrapper from './PageWrapper';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 const CreateEvent = () => {
     const [name, setName] = useState('');
@@ -11,7 +12,7 @@ const CreateEvent = () => {
     const [type, setType] = useState('');
     const [date, setDate] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const validate = () => {
         if (name.length < 1) {
@@ -50,7 +51,12 @@ const CreateEvent = () => {
     }
 
     return (
-        <div className={styles.createEvent}>
+        <motion.div 
+            className={styles.createEvent}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
             <Header title={t("CreateEvent.Title")} />
             <div className={styles.container}>
                 <form>
@@ -108,8 +114,14 @@ const CreateEvent = () => {
                     <button onClick={addEvent}>{t("CreateEvent.AddEvent")}</button>
                 </form>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
-export default CreateEvent
+const CreateEventWrapper = () => (
+    <PageWrapper index={2}>
+        <CreateEvent />
+    </PageWrapper>
+)
+
+export default CreateEventWrapper

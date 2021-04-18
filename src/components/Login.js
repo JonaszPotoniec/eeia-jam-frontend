@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import styles from '../styles/Login.module.scss'
 
 import { useStore } from '../store';
 import { loginUser } from '../actions';
 import ErrorMsg from './ErrorMsg';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
     const [loginValue, setLoginValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const { t, i18n } = useTranslation();
-    const history = useHistory();
+    const { t } = useTranslation();
     const [, dispatch] = useStore();
+    const history = useHistory();
 
     const login = e => {
         e.preventDefault();
@@ -80,7 +80,10 @@ const Login = () => {
                         <button onClick={e => login(e)}>Login</button>
                     </form>
                 </div>
-                <div className={styles.createAccount}>{t("Login.CreateAccount")}</div>
+                <div 
+                    className={styles.createAccount}
+                    onClick={() => history.push('/register')}
+                >{t("Login.CreateAccount")}</div>
             </div>
         </div>
     )

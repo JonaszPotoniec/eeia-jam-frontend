@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { LocationContext } from '../contexts/LocationContext';
 import styles from '../styles/Navbar.module.scss';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
+
+const paths = ['/events', '/map', '/create-event', '/settings'];
 
 const icons = [
     {
@@ -23,15 +26,22 @@ const icons = [
 ]
 
 const Navbar = () => {
+    const { setAnimationDirection } = useContext(LocationContext);
     const history = useHistory();
-    const [selected, setSelected] = useState(history.location.pathname.substring(1));
+    const location = useLocation();
+    const [selected, setSelected] = useState(location.pathname.substring(1));
 
     useEffect(() => {
-        setSelected(history.location.pathname.substring(1));
-    }, [history.location.pathname]);
+        setSelected(location.pathname.substring(1));
+    }, [location.pathname]);
 
     const handleClick = path => {
         setSelected(path);
+        
+        const currentIndex = paths.indexOf(location.pathname);
+        const newIndex = paths.indexOf('/' + path);
+
+        setAnimationDirection(currentIndex - newIndex);
         history.push('/' + path);
     }
 

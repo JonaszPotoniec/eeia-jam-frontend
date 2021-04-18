@@ -3,15 +3,13 @@
 .events {
     height: 100%;
     width: 100%;
-    background-color: #21D4FD;
-    background: $background-gradient;
     color: white;
     padding: $default-page-padding;
 }
 
-// .eventsList {
-    // height: 100%;
-// }
+.eventsList {
+    display: block;
+}
 
 .event {
     margin: 0 5%;

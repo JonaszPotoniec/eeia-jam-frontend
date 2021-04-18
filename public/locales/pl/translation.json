@@ -6,6 +6,8 @@
         "CreateAccount": "Stwórz nowe konto"
     },
     "CreateAccount": {
+        "FirstName": "Imię",
+        "LastName": "Nazwisko",
         "Title": "Stwórz konto",
         "Login": "Masz już konto? Zaloguj się",
         "Create": "Stwórz konto",
@@ -13,6 +15,8 @@
         "Confirm": "Potwierdź hasło"
     },
     "FormErrors": {
+        "EmptyFirstName": "Wpisz poprawne imię",
+        "EmptyLastName": "Wpisz poprawne nazwisko",
         "EmptyLogin": "Wpisz poprawny login",
         "EmptyPassword": "Wpisz poprawne hasło",
         "EmptyEmail": "Wpisz poprawny email",

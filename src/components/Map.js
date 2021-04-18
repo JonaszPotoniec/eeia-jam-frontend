@@ -1,48 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import styles from '../styles/Map.module.scss';
 import Header from './Header';
+import PageWrapper from './PageWrapper';
 import dayjs from "dayjs";
 
-const MapEvent = () => {
-
-    return (
-        <div></div>
-    )
-}
-
-const UserMarker = (props) => {
-  return (
-    <div style={{
-        "width": "32px",
-        "height": "32px",
-        "position": "relative",
-        "left": "-16px",
-        "top": "-16px",
-        "color": "black"
-      }} >{props.title}
-      <img src="https://static.wixstatic.com/media/2cd43b_6e75597b8426458bae69d2f7e60abd9c~mv2.png/v1/fill/w_640,h_640,fp_0.50_0.50,q_95/2cd43b_6e75597b8426458bae69d2f7e60abd9c~mv2.png" alt="" />
-    </div>
-  );
-}
-
 const Map = () => {
-    const zoom = .005;
+    const maxDistance = 10000000;
     const { t } = useTranslation();
     const [location, setLocation] = useState(null);
     const [timeInterval, setTimeInterval] = useState(null);
-    const [ eventList, setEventList ] = useState([{name: "Nocny Kochanek", time: '2021-04-17 23:30:00', location: {lat: 51.7526588, lon: 19.4532019}, img: "https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"}]);
+    const [ eventList, setEventList ] = useState([]);
+    const [lastLocation, setLastLocation] = useState(null);
 
     const updatePosition = () => {
         navigator.geolocation.getCurrentPosition((position)=>{
             const lat  = position.coords.latitude;
             const lon = position.coords.longitude;
-            // setLocation({
-            //     latitude: lat, 
-            //     longitude: lon
-            // });
             setLocation([
                 lat, 
                 lon
@@ -59,6 +34,18 @@ const Map = () => {
             }, 1000*60)
         );
 
+        navigator.geolocation.getCurrentPosition((position)=>{
+            const lat  = position.coords.latitude;
+            const lon = position.coords.longitude;
+            setLastLocation({lat: lat, lon: lon});
+
+            fetch(`http://localhost:5000/events/nearest?lat=${lat}&lon=${lon}&dis=${maxDistance}`,{
+                method: "GET"})
+            .then(response => response.json())
+            .then(json => setEventList(json))
+            .catch(error => console.log(error));
+        })
+
         return () => {
             clearInterval(timeInterval);
         }
@@ -68,7 +55,7 @@ const Map = () => {
         <div className={styles.Map}>
             <Header title={t("Map.Title")}/>
             {
-                location &&
+                location ?
                 <MapContainer center={location} zoom={13} scrollWheelZoom={true} className={styles.MapContainer}>
                     <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -76,22 +63,24 @@ const Map = () => {
                     />
                     {
                         eventList.map((e) => (
-                            <Marker position={[e.location.lat, e.location.lon]} key={e.name + e.time + e.location}>
+                            <Marker position={[e.latitude, e.longitude]} key={e.event_id}>
                                 <Popup>
                                     <PopupInside
-                                        name={e.name}
+                                        name={e.title}
                                         type={e.type}
                                         img={e.img}
-                                        time={dayjs(e.time)}
-                                        location={e.location}
+                                        time={dayjs(e.start_date.slice(0, 23)+e.start_date.slice(24), "YYYY-mm-dd HH:mm:ss.SSS Z")}
+                                        location={{lat: e.latitude, lon: e.longitude}}
                                         score={e.score}
                                         myPosition={location}
+                                        lastLocation={lastLocation}
                                     />
                                 </Popup>
                             </Marker>
                         ))
                     }
                 </MapContainer>
+                : <div className={styles.loader}></div>
             }
             <span className={styles.addEvent}></span>
         </div>
@@ -127,6 +116,23 @@ const PopupInside = (props) => {
         });
       }
 
+      const getDistanceFromLatLonInKm2 = (lat1, lon1, lat2, lon2) => {
+            const deg2rad = (deg) => {
+                return deg * (Math.PI/180)
+            }
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  // deg2rad below
+            var dLon = deg2rad(lon2-lon1); 
+            var a = 
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+            ; 
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            var d = R * c; // Distance in km
+            setDistance(Math.round(d*10)/10 + "km stąd");
+        }
+
     const getTimeScale = (n) => {
         if(Math.floor(n/1000/60/60/24) > 0)
             return ["Days", Math.floor(n/1000/60/60/24)];
@@ -141,7 +147,7 @@ const PopupInside = (props) => {
 
         if(x < 0) return t("Events.Event.Time.Started");
 
-        if(x == 1)
+        if(x === 1)
             return t(`Events.Event.Time.${scale}.Singular`, {count: x});
         if(x%10>=2 && x%10<=4 && (x%100<10 || x%100>=20))
             return t(`Events.Event.Time.${scale}.Plural1`, {count: x});
@@ -151,7 +157,10 @@ const PopupInside = (props) => {
 
     useEffect(()=>{
         setRemainingTime(props.time.diff(dayjs()))
-        getDistanceFromLatLonInKm(props.location.lat, props.location.lon)
+        if(props.lastLocation != null)
+            getDistanceFromLatLonInKm2(props.location.lat, props.location.lon, props.lastLocation.lon, props.lastLocation.lat)
+        else
+            getDistanceFromLatLonInKm(props.location.lat, props.location.lon)
         setTimeInterval(
             setInterval(()=>{
                 setRemainingTime(props.time.diff(dayjs()))
@@ -162,11 +171,11 @@ const PopupInside = (props) => {
         return () => {
             clearInterval(timeInterval);
         }
-    }, [props.time])
+    }, [props.time, props.location.lat, props.location.lon, getDistanceFromLatLonInKm])
 
     return (
         <div className={styles.MapEvent}>
-            <img src="https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"/>
+            <img alt={props.name+"-image"} src="https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"/>
             <div>
                 <h2>{props.name}</h2>
                 <div>
@@ -182,4 +191,10 @@ const PopupInside = (props) => {
     )
 }
 
-export default Map
+const MapWrapper = () => (
+    <PageWrapper index={1}>
+        <Map />
+    </PageWrapper>
+)
+
+export default MapWrapper

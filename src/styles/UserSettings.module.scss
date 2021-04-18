@@ -1,0 +1,16 @@
+@import 'variables.scss';
+
+.userSettings {
+    height: 100%;
+    width: 100%;
+    color: white;
+    padding: $default-page-padding;
+
+    .container {
+        background: white;
+        color: $font-black;
+        border-radius: $default-border-radius;
+        max-height: calc(100% - 110px);
+        overflow-y: scroll;
+    }
+}
