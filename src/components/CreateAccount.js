@@ -149,7 +149,8 @@ const CreateAccount = () => {
                 </div>
                 <div 
                     className={styles.login}
-                    onClick={() => history.push('/login')}
+                    onClick={() => {history.push('/login');
+                    window.location.reload(false);}}
                 >{t("CreateAccount.Login")}</div>
             </div>
         </div>

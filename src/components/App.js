@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 
 import { useStore } from '../store';
 
@@ -7,6 +7,16 @@ import Router from './Router';
 
 const App = () => {
     const [store] = useStore();
+    const history = useHistory();
+
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/users/byid`, {
+    //         method: 'GET'
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => )
+    //     .catch(err => console.log('Registration error:', err));
+    // }, []);
 
     useEffect(() => {
         const debug = e => {
@@ -19,7 +29,7 @@ const App = () => {
 
 
     return (
-        <BrowserRouter>
+        <BrowserRouter history={history}>
             <Router />
         </BrowserRouter>
     )

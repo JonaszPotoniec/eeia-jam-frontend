@@ -103,7 +103,7 @@ const Event = (props) => {
             className={styles.event}
             onClick={props.onClick}
         >
-            <img alt={props.name+"-image"} src="https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"/>
+            <img alt={props.name+"-image"} src={props.img_path}/>
             <div>
                 <h2>{props.name}</h2>
                 <div>
@@ -137,7 +137,7 @@ const Events = () => {
             fetch(`http://localhost:5000/events/nearest?lat=${lat}&lon=${lon}&dis=${maxDistance}`,{
                 method: "GET"})
             .then(response => response.json())
-            .then(json => setEventList(json))
+            .then(json => {setEventList(json); console.log(json)})
             .catch(error => console.log(error));
         })
     }, []);
@@ -152,13 +152,16 @@ const Events = () => {
                         <Event
                             name={e.title}
                             type={e.type}
-                            img={e.img}
+                            img_path={e.img_path ?
+                                "http://" + window.location.hostname+":5000"+e.img_path :
+                                "https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"
+                            }
                             time={dayjs(e.start_date.slice(0, 23)+e.start_date.slice(24), "YYYY-mm-dd HH:mm:ss.SSS Z")}
                             location={{lat: e.latitude, lon: e.longitude}}
                             score={e.score}
                             key={e.event_id}
                             lastLocation={lastLocation}
-                            onClick={(e) => setSelectedEvent(e)}
+                            onClick={() => setSelectedEvent(e)}
                             // key={e.name + e.time + e.location}
                         />
                     ))
@@ -167,17 +170,14 @@ const Events = () => {
             <span className={styles.addEvent}></span>
         </div>
 
-        {/* TODO */}
-        <DetailsCard event={selectedEvent} close={() =>setSelectedEvent(null)} />
-        {/* <AnimatePresence>
-            {selectedEvent && (
-                <DetailsCard event={selectedEvent} close={() => setSelectedEvent(null)} />
-            )}
-        </AnimatePresence> */}
+        <DetailsCard 
+            event={selectedEvent} 
+            close={() => setSelectedEvent(null)} 
+        />
     </>)
 }
 
-const eventWrapper = () => ( //mogę wyłączyć? taaa, jutro zrobie ta karte. najwyzej usuniemy xd
+const eventWrapper = () => ( 
     <PageWrapper index={0}>
         <Events />
     </PageWrapper>

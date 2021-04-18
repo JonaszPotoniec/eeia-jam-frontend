@@ -11,8 +11,11 @@
     padding: 10px;
 
     .icons {
-        display: flex;
-        justify-content: space-around;
+        // display: flex;
+        // justify-content: space-around;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        place-items: center;
 
         .iconContainer {
             display: flex;
@@ -32,7 +35,6 @@
 
             &.selected {
                 color: #796BFE;
-                // color: transparent;
             }
         }
     }

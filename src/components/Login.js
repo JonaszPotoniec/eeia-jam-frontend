@@ -24,14 +24,16 @@ const Login = () => {
             method: 'POST', 
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({
-                email: loginValue,
-                password: passwordValue
+                email: loginValue,  // kol38644@zwoho.com
+                password: passwordValue // PYUDU436y3nBYiR
             })
         })
         .then(res => res.json())
         .then(({ user }) => {
+            console.log('user:', user);
             dispatch(loginUser(user));
             history.push('/events');
+            window.location.reload(false);
         })
         .catch(err => console.log('Login error:', err));
     }
@@ -89,7 +91,7 @@ const Login = () => {
                 </div>
                 <div 
                     className={styles.createAccount}
-                    onClick={() => history.push('/register')}
+                    onClick={() => {history.push('/register'); window.location.reload(false);}}
                 >{t("Login.CreateAccount")}</div>
             </div>
         </div>

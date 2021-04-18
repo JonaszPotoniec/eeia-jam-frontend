@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { LocationContext } from '../contexts/LocationContext';
 import styles from '../styles/Navbar.module.scss';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const paths = ['/events', '/map', '/create-event', '/settings'];
 
@@ -18,14 +19,16 @@ const icons = [
         icon: 'plus',
         path: 'create-event',
         text: 'New'
-    }, {
-        icon: 'cog',
-        path: 'settings',
-        text: 'Settings'
-    }
+    }, 
+    // {
+    //     icon: 'cog',
+    //     path: 'settings',
+    //     text: 'Settings'
+    // }
 ]
 
 const Navbar = () => {
+    const { t } = useTranslation();
     const { setAnimationDirection } = useContext(LocationContext);
     const history = useHistory();
     const location = useLocation();
@@ -53,7 +56,7 @@ const Navbar = () => {
                 onClick={() => handleClick(path)}
             >
                 <i className={`fas fa-${icon}`}/>
-                <div>{text}</div>
+                <div>{t("Navbar."+text)}</div>
             </div>
         )
     )}

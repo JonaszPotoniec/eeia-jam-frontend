@@ -66,6 +66,18 @@
         "EventDescription": "Opis eventu",
         "Type": "Typ", 
         "Date": "Data",
+        "Image": "Logo",
         "AddEvent": "Stwórz event"
+    },
+    "DetailsCard": {
+        "Navigate": "Nawiguj"
+    },
+    "Settings": {
+        "Title": "Ustawienia"
+    },
+    "Navbar": {
+        "Home": "Wydarzenia",
+        "Map": "Mapa",
+        "New": "Dodaj"
     }
 }

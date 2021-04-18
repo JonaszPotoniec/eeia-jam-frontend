@@ -5,10 +5,83 @@
     top: 0; left: 0; right: 0; bottom: 0;
     margin: auto;
     height: 80%;
-    width: 80%;
+    width: 80vw;
     background: white;
     border-radius: $default-border-radius;
     z-index: 1001;
+    overflow: hidden;
+    color: $font-black;
+    
+    display: grid;
+    grid-template-rows: min-content 1fr;
+
+    .container {
+        padding: 15px 20px;
+        display: grid;
+        grid-template-rows: 1fr min-content;
+        height: 100%;
+        width: 100%;
+        word-wrap: break-word;
+
+        .textContainer {
+            width: 100%;
+        }
+    }
+
+    img {
+        height: 250px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: $default-border-radius;
+        box-shadow: $shadow-xl;
+    }
+
+    h2, p {
+        margin: 0;
+    }
+
+    h2 {
+        font-family: $secondary-font;
+    }
+
+    p {
+        padding-top: 10px;
+    }
+
+    .localizationContainer {
+        display: flex;
+        justify-content: space-between;
+
+        .iconsContainer {
+            display: flex;
+            flex-direction: column;
+
+            .iconContainer {
+                i {
+                    width: 15px;
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        a {
+            background-color: #21D4FD;
+            background: $background-gradient;
+            color: white;
+            border-radius: 15px;
+            border: none;
+            padding: 0 15px;
+            transition: all .5s;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            text-decoration: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
 }
 
 .dimLayer {
@@ -18,6 +91,5 @@
     height: 100vh;
     width: 100vh;
     background: black;
-    // pointer-events: none;
     z-index: 1000;
 }

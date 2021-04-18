@@ -12,6 +12,7 @@ const CreateEvent = () => {
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
     const [date, setDate] = useState('');
+    const [image, setImage] = useState('');
     const [pointLocation, setPointLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState('');
     const { t } = useTranslation();
@@ -45,6 +46,11 @@ const CreateEvent = () => {
             return false;
         }
 
+        if (!image) {
+            setErrorMsg(t('FormErrors.EmptyDate'));
+            return false;
+        }
+
         const currentDate = new Date();
         if (date <= currentDate) {
             setErrorMsg(t('FormErrors.PastDate'));
@@ -59,20 +65,35 @@ const CreateEvent = () => {
         e.preventDefault();
         if(!validate()) return;
 
-        fetch(`http://localhost:5000/events`, {
+
+        const formData = new FormData();
+        formData.append(
+            "image",
+            image
+        );
+        fetch(`http://localhost:5000/uploads`, {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                title: name,
-                description: description,
-                start_date: date,
-                latitude: pointLocation[0],
-                longitude: pointLocation[1],
-                is_official: type === 'official'
-            })
+            body: formData
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            fetch(`http://localhost:5000/events`, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({
+                    title: name,
+                    description: description,
+                    start_date: date,
+                    latitude: pointLocation[0],
+                    longitude: pointLocation[1],
+                    is_official: type === 'official',
+                    img_path: data.path
+                })
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log('Registration error:', err));
+        })
         .catch(err => console.log('Registration error:', err));
     }
 
@@ -132,6 +153,13 @@ const CreateEvent = () => {
                         <input 
                             type="datetime-local"
                             onChange={e => setDate(new Date(e.target.value))}
+                        />
+                    </label>
+                    <label>
+                        <span>{t("CreateEvent.Image")}</span>
+                        <input 
+                            type="file" id="img" name="img" accept="image/*"
+                            onChange={e => setImage(e.target.files[0])}
                         />
                     </label>
                     {

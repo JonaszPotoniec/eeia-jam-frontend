@@ -77,7 +77,10 @@ const Map = () => {
                                     <PopupInside
                                         name={e.title}
                                         type={e.type}
-                                        img={e.img}
+                                        img_path={e.img_path ?
+                                            "http://" + window.location.hostname+":5000"+e.img_path :
+                                            "https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"
+                                        }
                                         time={dayjs(e.start_date.slice(0, 23)+e.start_date.slice(24), "YYYY-mm-dd HH:mm:ss.SSS Z")}
                                         location={{lat: e.latitude, lon: e.longitude}}
                                         score={e.score}
@@ -184,7 +187,7 @@ const PopupInside = (props) => {
 
     return (
         <a className={styles.MapEvent} href={`http://maps.google.com/maps?daddr=${props.location.lat},${props.location.lon}&amp;ll=`}>
-            <img alt={props.name+"-image"} src="https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"/>
+            <img alt={props.name+"-image"} src={props.img_path}/>
             <div>
                 <h2>{props.name}</h2>
                 <div>

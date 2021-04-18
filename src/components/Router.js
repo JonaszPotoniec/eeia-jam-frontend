@@ -24,7 +24,9 @@ const Router = () => {
             <div style={{ height: '100%', background: 'linear-gradient(244deg, #21D4FD 0%, #B721FF 100%)' }}>
                 <AnimatePresence exitBeforeEnter initial={false}>
                     <Switch location={location} key={location.pathname}>
-                        <Route exact path="/" render={() => <div>landing screen?</div>} />
+                        <Route exact path="/">
+                            <Login />
+                        </Route>
                         <Route exact path="/login">
                             <Login />
                         </Route>
