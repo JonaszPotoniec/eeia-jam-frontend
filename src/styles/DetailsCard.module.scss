@@ -8,6 +8,7 @@
     width: 80%;
     background: white;
     border-radius: $default-border-radius;
+    z-index: 1001;
 }
 
 .dimLayer {
@@ -17,4 +18,6 @@
     height: 100vh;
     width: 100vh;
     background: black;
+    // pointer-events: none;
+    z-index: 1000;
 }

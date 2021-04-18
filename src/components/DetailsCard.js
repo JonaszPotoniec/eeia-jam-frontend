@@ -1,59 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/DetailsCard.module.scss';
-import { motion, useAnimation } from 'framer-motion';
-
-// const cardVariants = {
-//     initial: {
-//         y: '-100vh'
-//     }, 
-//     animate: {
-//         y: 0
-//     },
-//     exit: {
-//         y: '100vh'
-//     }
-// }
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 
 const DetailsCard = ({ event, close }) => {
-    const [startY, setStartY] = useState(null); 
+    const [animateY, setAnimateY] = useState(0);
+    const [pointerEvents, setPointerEvents] = useState('all')
     const [endY, setEndY] = useState(null); 
-    const controls = useAnimation();
+    const y = useMotionValue(0);
+    const opacity = useTransform(y, [-800, 0, 800], [0, .4, 0]);
 
-    const handleDragStart = (e, info) => {
-        // setStartY(info.point.y);
-    }
+    useEffect(() => {
+        if (event) {
+            setAnimateY(0);
+            setPointerEvents('all');
+        }
+    }, [event]);
 
     const handleDragEnd = (e, info) => {
-        if (Math.abs(startY - info.point.y) > 150) {
-            console.log('offset > 100, closing card');
-            // controls.start({ y: '-100vh' });
+        console.log(info);
+        if (info.offset.y > 250) {
+            setAnimateY(800);
+            setPointerEvents('none');
+            setTimeout(() => {
+                close();
+            }, 200);
+        }
 
-            // setTimeout(() => {
-            //     close();
-            // }, 300);
+        if (info.offset.y < -250) {
+            setAnimateY(-800);
+            setPointerEvents('none');
+            setTimeout(() => {
+                close();
+            }, 200);
         }
     }
     
     return (
         <>
-            {/* <motion.div 
+            <motion.div 
                 className={styles.dimLayer} 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: .4 }}
-                exit={{ opacity: 0 }}
-                key="dimLayer"
-            /> */}
+                style={{ opacity, pointerEvents }}
+            />
 
             <motion.div 
                 className={styles.card}
-                initial={{ y: '100vh' }}
-                animate={{ y: 0 }}
-                exit={{ y: '-100vh' }}
-                drag
+                style={{ y, pointerEvents }}
+                animate={{ y: animateY }}
+                transition={{ type: 'spring', duration: .2, stiffness: 150, damping: 17 }}
+                drag="y"
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={.1}
-                // onDragStart={(e, info) => handleDragStart(e, info)}
-                // onDragEnd={(e, info) => handleDragEnd(e, info)}
+                onDragEnd={(e, info) => handleDragEnd(e, info)}
             >
                 karta
             </motion.div>

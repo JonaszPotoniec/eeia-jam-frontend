@@ -6,8 +6,17 @@ import Header from './Header';
 import PageWrapper from './PageWrapper';
 import dayjs from "dayjs";
 
+import L from 'leaflet';
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png').default,
+  iconUrl: require('leaflet/dist/images/marker-icon.png').default,
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png').default,
+});
+
 const Map = () => {
-    const maxDistance = 10000000;
+    const maxDistance = 25;
     const { t } = useTranslation();
     const [location, setLocation] = useState(null);
     const [timeInterval, setTimeInterval] = useState(null);

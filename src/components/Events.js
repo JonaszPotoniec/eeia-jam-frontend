@@ -122,7 +122,7 @@ const Event = (props) => {
 const Events = () => {
     const { t } = useTranslation();
     const [ eventList, setEventList ] = useState([]);
-    const maxDistance = 10000000;
+    const maxDistance = 25;
     const [lastLocation, setLastLocation] = useState(null);
     
     //do DetailsCard
@@ -168,15 +168,16 @@ const Events = () => {
         </div>
 
         {/* TODO */}
-        <AnimatePresence>
+        <DetailsCard event={selectedEvent} close={() =>setSelectedEvent(null)} />
+        {/* <AnimatePresence>
             {selectedEvent && (
                 <DetailsCard event={selectedEvent} close={() => setSelectedEvent(null)} />
             )}
-        </AnimatePresence>
+        </AnimatePresence> */}
     </>)
 }
 
-const eventWrapper = () => (
+const eventWrapper = () => ( //mogę wyłączyć? taaa, jutro zrobie ta karte. najwyzej usuniemy xd
     <PageWrapper index={0}>
         <Events />
     </PageWrapper>
