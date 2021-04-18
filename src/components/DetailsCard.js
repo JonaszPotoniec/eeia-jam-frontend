@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/DetailsCard.module.scss';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 
 // const cardVariants = {
 //     initial: {
@@ -17,15 +17,20 @@ import { motion } from 'framer-motion';
 const DetailsCard = ({ event, close }) => {
     const [startY, setStartY] = useState(null); 
     const [endY, setEndY] = useState(null); 
+    const controls = useAnimation();
 
     const handleDragStart = (e, info) => {
-        setStartY(info.point.y);
+        // setStartY(info.point.y);
     }
 
     const handleDragEnd = (e, info) => {
         if (Math.abs(startY - info.point.y) > 150) {
             console.log('offset > 100, closing card');
-            close();
+            // controls.start({ y: '-100vh' });
+
+            // setTimeout(() => {
+            //     close();
+            // }, 300);
         }
     }
     
@@ -41,19 +46,14 @@ const DetailsCard = ({ event, close }) => {
 
             <motion.div 
                 className={styles.card}
-                // initial={{ y: '100vh' }}
-                // animate={{ y: 0 }}
+                initial={{ y: '100vh' }}
+                animate={{ y: 0 }}
                 exit={{ y: '-100vh' }}
-                // variants={cardVariants}
-                // initial="initial"
-                // animate="animate"
-                // exit="exit"
-                drag="y"
+                drag
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={.1}
-                onDragStart={(e, info) => handleDragStart(e, info)}
-                onDragEnd={(e, info) => handleDragEnd(e, info)}
-                key="card"
+                // onDragStart={(e, info) => handleDragStart(e, info)}
+                // onDragEnd={(e, info) => handleDragEnd(e, info)}
             >
                 karta
             </motion.div>

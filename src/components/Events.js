@@ -170,7 +170,7 @@ const Events = () => {
         {/* TODO */}
         <AnimatePresence>
             {selectedEvent && (
-                <DetailsCard event={selectedEvent} close={() => setSelectedEvent(null)}/>
+                <DetailsCard event={selectedEvent} close={() => setSelectedEvent(null)} />
             )}
         </AnimatePresence>
     </>)

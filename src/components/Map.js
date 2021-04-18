@@ -171,10 +171,10 @@ const PopupInside = (props) => {
         return () => {
             clearInterval(timeInterval);
         }
-    }, [props.time, props.location.lat, props.location.lon, getDistanceFromLatLonInKm])
+    }, [props.time])
 
     return (
-        <div className={styles.MapEvent}>
+        <a className={styles.MapEvent} href={`http://maps.google.com/maps?daddr=${props.location.lat},${props.location.lon}&amp;ll=`}>
             <img alt={props.name+"-image"} src="https://weeia.edu.p.lodz.pl/pluginfile.php/23134/user/icon/adaptable/f3?rev=1386054"/>
             <div>
                 <h2>{props.name}</h2>
@@ -187,7 +187,7 @@ const PopupInside = (props) => {
                     <span>{distance}</span>
                 </div>
             </div>
-        </div>
+        </a>
     )
 }
 
