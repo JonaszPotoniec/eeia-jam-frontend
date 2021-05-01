@@ -7,6 +7,7 @@
 [Marcin Świderek](https://github.com/MMuii)  
 [Jonasz Potoniec](https://github.com/JonaszPotoniec)  
   
+Frontend repository: [link](https://github.com/JonaszPotoniec/eeia-jam-frontend)  
 Frontend repository at the time of winning: [link](https://github.com/JonaszPotoniec/eeia-jam-frontend/tree/winning-branch)
 
 ## Backend team:
@@ -14,4 +15,5 @@ Frontend repository at the time of winning: [link](https://github.com/JonaszPoto
 [Karol Przybysz](https://github.com/Nilx12)  
 [Grzegorz Kaczmarek](https://github.com/navivix)  
   
+Backend repository: [link](https://github.com/JonaszPotoniec/-eeia-jam-backend-)  
 Backend repository at the time of winning: [link](https://github.com/JonaszPotoniec/-eeia-jam-backend-/tree/winning-branch)
